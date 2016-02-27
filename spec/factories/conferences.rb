@@ -7,7 +7,7 @@ FactoryGirl.define do
     timezone 'Amsterdam'
     start_date { Date.today }
     end_date { 6.days.from_now }
-    registration_limit 0
+    registration_limit 10
 
     factory :full_conference do
       splashpage
