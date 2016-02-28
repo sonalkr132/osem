@@ -4,5 +4,6 @@ FactoryGirl.define do
   factory :registration do
     user
     conference { create(:conference, registration_period: create(:registration_period, start_date: 3.days.ago)) }
+    arrival 3.days.ago
   end
 end
