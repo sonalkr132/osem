@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature Event do
   let!(:conference) { create(:conference) }
+  let(:registration_period) { create(:registration_period, conference: conference, start_date: Date.current) }
   let!(:cfp) { create(:cfp, program_id: conference.program.id) }
   let!(:organizer_role) { create(:organizer_role, resource: conference) }
   let!(:organizer) { create(:user, email: 'admin@example.com', role_ids: [organizer_role.id]) }
@@ -127,6 +128,7 @@ feature Event do
     end
 
     scenario 'confirms a proposal', feature: true, js: true do
+      registration_period # opens conference for registration
       sign_in participant
       visit conference_program_proposal_index_path(conference.short_title)
       expect(page.has_content?('Example Proposal')).to be true
