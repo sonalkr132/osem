@@ -14,7 +14,11 @@ class Commercial < ActiveRecord::Base
       resource = OEmbed::Providers.get(url, maxwidth: 560, maxheight: 315)
       { html: resource.html.html_safe }
     rescue StandardError => exception
-      { error: exception.message }
+      if exception.message.include? 'OEmbed::NotFound'
+        { error: "\"#{url[0..50]}...\"" + ' is not supported url' }
+      else
+        { error: exception.message }
+      end
     end
   end
 
